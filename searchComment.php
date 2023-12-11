@@ -1,10 +1,10 @@
 <?php
 require_once("connectDB.php");
-$searchText = $_GET["q]"];
+$searchText = $_GET["q"];
 
-$sql = "SELECT comment, commentNo
+$sql = "SELECT comment, commentNo, commentTime
         FROM message
-        ORDER BY commentNo 
+        ORDER BY commentTime 
         DESC";
 
 $result = $db_link->query($sql);
@@ -22,7 +22,4 @@ while($row_result = $result->fetch_assoc()){
 }
 
 echo json_encode($resArray);
-
-// header("Location: message.php");
-
 ?>

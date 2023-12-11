@@ -6,7 +6,7 @@ $sql = "SELECT b.id, b.memName, b.memAvatar,
         FROM message AS m
         LEFT JOIN member AS b
         ON (m.memberId = b.id)
-        ORDER BY m.commentNo 
+        ORDER BY m.commentTime 
         DESC";
 $result = $db_link->query($sql);
 ?>
@@ -93,23 +93,25 @@ $result = $db_link->query($sql);
 
         // 顯示符合的留言
         function showComment(data){
-            let allcomment = document.querySelectorAll(".hiddenInput");
-            var arr = Array.prototype.slice.call( allcomment );
+            if(data.length==0){
+                alert("Oops... 沒有符合的留言")
+            }else{
+                let allcomment = document.querySelectorAll(".hiddenInput");
+                var arr = Array.prototype.slice.call( allcomment );
 
-            for(let i=0; i<data.length; i++){
-                console.log(data[i])
-
-                for (let j = 0; j < arr.length; j++) {
-                    // 只留下要隱藏的container
-                    if(data[i]==arr[j].value){  
-                        arr.splice(j,1)
-                        break;
+                for(let i=0; i<data.length; i++){
+                    for (let j = 0; j < arr.length; j++) {
+                        // 只留下要隱藏的container
+                        if(data[i]==arr[j].value){  
+                            arr.splice(j,1)
+                            break;
+                        }
                     }
                 }
-            }
 
-            for(let i=0; i<arr.length; i++){  
-                arr[i].parentNode.parentNode.className = "container hide";                
+                for(let i=0; i<arr.length; i++){  
+                    arr[i].parentNode.parentNode.className = "container hide";                
+                }
             }
         }
 
