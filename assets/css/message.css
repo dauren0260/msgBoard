@@ -1,0 +1,134 @@
+form{
+    width: auto;
+}
+
+.title{
+    margin-bottom: 50px;
+}
+.searchInput{
+    padding: 6px 12px;
+    vertical-align: middle;
+}
+
+.searchArea .btn{
+    vertical-align: middle;
+}
+
+.searchArea{
+    text-align: center;
+}
+.container{
+    margin:  10px auto;
+    width: 800px;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1.5px solid lightgray;
+    padding-bottom: 20px;
+}
+
+.container.hide{
+    display: none;
+}
+
+.container > div{
+    padding: 0 20px;
+}
+
+.popular{
+    text-align: center;
+}
+.popular span{
+    margin: 5px 0px;
+    display: inline-block;
+}
+.popular i{
+    font-size: 18px;
+}
+.popular i:hover{
+    cursor: pointer;
+    color: #0d6efd;
+}
+.avatar{
+    display: inline-block;
+    width: 50px;
+    vertical-align: middle;
+}
+
+.avatar img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.commentAvatar{
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+.memContent{
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+.msgContent{
+    margin-top: 10px;
+}
+
+.msgContainer{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.msgContainer textarea{
+    vertical-align: bottom;
+    font-size: 18px;
+    resize: none;
+}
+.msgContainer .btn-outline-primary{
+    vertical-align: bottom;
+}
+.btn-outline-secondary,
+.btn-outline-warning{
+    display: inline-block;
+    text-decoration: none;
+}
+
+.showContent{
+    display: block;
+}
+
+.hideContent{
+    display: none;
+}
+.container .contentArea{
+    flex-grow: 1;
+    width: 600px;
+}
+.container .contentArea textarea{
+    resize: none;
+}
+
+.container .actionArea div{
+    margin-top: 10px;
+}
+
+.hideSpan{
+    display: none;
+}
+.hideSpan.show{
+    display: inline-block;
+}
+
+.showmore,.hidemore{
+    display: inline-block;
+    color: #065fd4;
+    margin-top: 5px;
+}
+
+.showmore:hover,.hidemore:hover{
+    cursor: pointer;
+}
+.showmore.hide,.hidemore.hide{
+    display: none;
+}

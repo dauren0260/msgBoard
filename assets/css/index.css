@@ -1,0 +1,65 @@
+form{
+    width: 235px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.title{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+tbody td{
+    display: block;
+    margin: 10px 0;
+}
+
+tfoot{
+    text-align: right;
+}
+tfoot tr{
+    display: inline-block;
+    margin: 0 5px;
+}
+.btn{
+    padding: 6px 12px;
+    border-radius: 2px;
+    background-color: #fff;
+    outline: none;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 16px;
+}
+
+.btn:hover{
+    cursor: pointer;
+}
+.btn-outline-primary {
+    border-color: #6DB9EF;
+    color: #6DB9EF;
+}
+.btn-outline-primary:hover {
+    background-color: #6DB9EF;
+    border-color: #6DB9EF;
+    color: #fff;
+}
+.btn-outline-secondary {
+    border-color: #a9a9a9;
+    color: #a9a9a9;
+}
+.btn-outline-secondary:hover {
+    background-color: #a9a9a9;
+    border-color: #a9a9a9;
+    color: #fff;
+}
+.btn-outline-warning {
+    border-color: #e36d6d;
+    color: #e36d6d;
+}
+.btn-outline-warning:hover {
+    background-color: #e36d6d;
+    border-color: #e36d6d;
+    color: #fff;
+}
+
