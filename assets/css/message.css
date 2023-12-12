@@ -1,24 +1,26 @@
-form{
+form {
     width: auto;
 }
 
-.title{
+.title {
     margin-bottom: 50px;
 }
-.searchInput{
+
+.searchInput {
     padding: 6px 12px;
     vertical-align: middle;
 }
 
-.searchArea .btn{
+.searchArea .btn {
     vertical-align: middle;
 }
 
-.searchArea{
+.searchArea {
     text-align: center;
 }
-.container{
-    margin:  10px auto;
+
+.container {
+    margin: 10px auto;
     width: 800px;
     display: flex;
     justify-content: space-around;
@@ -26,109 +28,193 @@ form{
     padding-bottom: 20px;
 }
 
-.container.hide{
+.container.hide {
     display: none;
 }
 
-.container > div{
+.container>div {
     padding: 0 20px;
 }
 
-.popular{
+.popular {
     text-align: center;
 }
-.popular span{
+
+.popular span {
     margin: 5px 0px;
     display: inline-block;
 }
-.popular i{
+
+.popular i {
     font-size: 18px;
 }
-.popular i:hover{
+
+.popular i:hover {
     cursor: pointer;
     color: #0d6efd;
 }
-.avatar{
+
+.avatar {
     display: inline-block;
     width: 50px;
     vertical-align: middle;
 }
 
-.avatar img{
+.avatar img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
-.commentAvatar{
+.commentAvatar {
     vertical-align: top;
     margin-right: 10px;
 }
 
-.memContent{
+.memContent {
     display: inline-block;
     vertical-align: middle;
     padding-left: 10px;
 }
 
-.msgContent{
+.msgContent {
     margin-top: 10px;
 }
 
-.msgContainer{
+.msgContainer {
     text-align: center;
     margin-top: 50px;
 }
 
-.msgContainer textarea{
+.msgContainer button{
+    display: block;
+}
+
+.msgContainer textarea {
     vertical-align: bottom;
     font-size: 18px;
     resize: none;
 }
-.msgContainer .btn-outline-primary{
+
+.msgContainer .btn-outline-primary {
     vertical-align: bottom;
 }
+
+.insert button{
+    margin-left: 465px;
+    margin-top: 10px;
+}
+
 .btn-outline-secondary,
-.btn-outline-warning{
+.btn-outline-warning {
     display: inline-block;
     text-decoration: none;
 }
 
-.showContent{
+.showContent {
     display: block;
 }
 
-.hideContent{
+.hideContent {
     display: none;
 }
-.container .contentArea{
+
+.container .contentArea {
     flex-grow: 1;
     width: 600px;
 }
-.container .contentArea textarea{
+
+.container .contentArea textarea {
     resize: none;
 }
 
-.container .actionArea div{
+.container .actionArea div {
     margin-top: 10px;
 }
 
-.hideSpan{
+.hideSpan {
     display: none;
 }
-.hideSpan.show{
+
+.hideSpan.show {
     display: inline-block;
 }
 
-.showmore,.hidemore{
+.showmore,
+.hidemore {
     display: inline-block;
     color: #065fd4;
     margin-top: 5px;
 }
 
-.showmore:hover,.hidemore:hover{
+.showmore:hover,
+.hidemore:hover {
     cursor: pointer;
 }
-.showmore.hide,.hidemore.hide{
+
+.showmore.hide,
+.hidemore.hide {
     display: none;
+}
+
+/* pagination */
+.pagination_block {
+    text-align: right;
+    padding-right: 300px;
+}
+
+.pagination {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+}
+
+.pagination>li {
+    display: inline-block;
+}
+
+.pagination>li>a {
+    display: inline-block;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-right: 0;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 18px;
+    color: #6DB9EF;
+}
+
+.pagination>li:last-child>a {
+    border-right: 1px solid #dee2e6;
+    border-radius: 0 5px 5px 0;
+}
+
+.pagination>li:first-child>a {
+    display: inline-block;
+    border-radius: 5px 0 0 5px;
+}
+
+.pagination>li>a.on {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+.pagination>li>a:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+/* update.php */
+.update .avatar{
+    width: 80px;
+}
+
+.update .actionArea{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.update .actionArea a {
+    text-decoration: none;
 }

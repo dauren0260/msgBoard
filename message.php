@@ -1,6 +1,14 @@
 <?php
 require_once("connectDB.php");
 
+$pageRow = 3;  //每頁顯示3筆
+$pageNumber = 1;  //當前頁數
+
+if(isset($_GET['page'])){
+    $pageNumber = $_GET['page'];
+}
+$startRow = ($pageNumber - 1) * $pageRow;  //本頁開始的筆數
+
 $sql = "SELECT b.id, b.memName, b.memAvatar, 
                 m.commentNo, m.comment, m.commentTime 
         FROM message AS m
@@ -8,7 +16,13 @@ $sql = "SELECT b.id, b.memName, b.memAvatar,
         ON (m.memberId = b.id)
         ORDER BY m.commentTime 
         DESC";
-$result = $db_link->query($sql);
+
+$sql_limit = $sql . " LIMIT " . $startRow . "," . $pageRow;
+$allResult = $db_link->query($sql);
+$result = $db_link->query($sql_limit);
+
+$totalRow = $allResult->num_rows;   //總筆數
+$totalPage = ceil($totalRow/$pageRow);  //總頁數
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +62,7 @@ $result = $db_link->query($sql);
                         </div>
                         <div class="actionArea">
                             <div class="edit">
-                                <a href="update.php?commentNo='.$row_result["commentNo"].'" class="btn btn-outline-secondary">編輯</a>
+                                <a href="update.php?page='.$pageNumber.'&commentNo='.$row_result["commentNo"].'" class="btn btn-outline-secondary">編輯</a>
                             </div>
                             <div class="delete">
                                 <a href="javascript:void(0)" onClick="dropData('.$row_result["commentNo"].')" class="btn btn-outline-warning">刪除</a>
@@ -59,17 +73,30 @@ $result = $db_link->query($sql);
                     </div>';
         }
         ?>
-        
+        <div class="pagination_block">
+            <ul class="pagination">
+                <?php
 
-    <form action="insert.php" method="post">
+                for($i=1; $i<=$totalPage; $i++){
+                    if($i==$pageNumber){
+                        echo '<li><a href="message.php?page='.$i.'" class="on">'.$i.'</a></li>';
+                    }else{
+                        echo '<li><a href="message.php?page='.$i.'">'.$i.'</a></li>';
+                    }
+                }
+                ?>
+            </ul>
+        </div>
+
+    <form action="insert.php" method="post" class="insert">
         <div class="msgContainer">
             <div class="avatar commentAvatar">
                 <img src="./assets/img/memDefault.png" alt="avatar">
                 <div class="username">訪客</div>
             </div>
             <textarea name="content" id="content" cols="50" rows="5"></textarea>
-            <button type="submit" value="send" class="btn btn-outline-primary">Send</button>
         </div>
+        <button type="submit" value="send" class="btn btn-outline-primary">送出</button>
     </form>
     <script>
         function searchComment(){
@@ -123,6 +150,7 @@ $result = $db_link->query($sql);
             }
         }
 
+
         window.onload = function(){
             searchInput.addEventListener("input",resetPage,false);
             searchInput.addEventListener("keydown",function(e){
@@ -130,6 +158,8 @@ $result = $db_link->query($sql);
                     searchComment();
                 }
             },false);
+
+
         }
     </script>
 </body>

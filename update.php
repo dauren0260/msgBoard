@@ -1,6 +1,10 @@
 <?php
 require_once("connectDB.php");
 
+if(isset($_GET['page'])){
+    $pageNumber = $_GET['page'];
+}
+
 $sql = "SELECT  m.commentNo, m.comment, m.commentTime, 
                 b.id, b.memName, b.memAvatar 
         FROM message AS m
@@ -25,7 +29,7 @@ $stmt->fetch();
 </head>
 <body>
         <div class="title">留言版 - 編輯留言</div>    
-        <form action="updateDB.php" method="post">
+        <form action="updateDB.php" method="post" class="update">
             <div class="msgContainer">
                 <div class="avatar commentAvatar">
                     <?php echo '<img src="./assets/img/'.$avatar.'" alt="avatar" />'; ?>
@@ -33,6 +37,11 @@ $stmt->fetch();
                 </div>
                 <textarea name="content" id="content" cols="80" rows="15"><?php echo $comment; ?></textarea>
                 <input type="hidden" name="commentNo"  value="<?php echo $commentNo; ?>">
+            </div>
+            <div class="actionArea"> 
+                <button type="button" value="send" class="btn btn-outline-secondary">
+                    <a href="message.php?page=<?php echo $pageNumber; ?>">取消</a>
+                </button>
                 <button type="submit" value="send" class="btn btn-outline-primary">送出</button>
             </div>
         </form>
