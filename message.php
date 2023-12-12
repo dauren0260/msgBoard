@@ -159,7 +159,15 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
                 }
             },false);
 
-
+            var allMsgContent = document.querySelectorAll(".msgContent")
+            for (let i = 0; i < allMsgContent.length; i++) {
+                var computedLength = allMsgContent[i].innerText.length;
+                var sencondPart = allMsgContent[i].innerText.slice(101)
+                if(computedLength>100){
+                    allMsgContent[i].innerText.substr(0,100) + "..."
+                }
+                
+            }
         }
     </script>
 </body>
