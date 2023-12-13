@@ -7,15 +7,25 @@ $pageNumber = 1;  //當前頁數
 if(isset($_GET['page'])){
     $pageNumber = $_GET['page'];
 }
+
 $startRow = ($pageNumber - 1) * $pageRow;  //本頁開始的筆數
 
 $sql = "SELECT b.id, b.memName, b.memAvatar, 
                 m.commentNo, m.comment, m.commentTime 
         FROM message AS m
         LEFT JOIN member AS b
-        ON (m.memberId = b.id)
-        ORDER BY m.commentTime 
-        DESC";
+        ON (m.memberId = b.id)";
+
+if(isset($_GET['search'])){
+    $searchText = trim($_GET['search']);
+    $searchHref = "&search=".$searchText."";
+    $sql = $sql . "WHERE m.comment LIKE '%".$searchText."%'";
+}else{
+    $searchText = "";
+    $searchHref = "";
+}
+
+$sql = $sql . "ORDER BY m.commentTime DESC";
 
 $sql_limit = $sql . " LIMIT " . $startRow . "," . $pageRow;
 $allResult = $db_link->query($sql);
@@ -40,17 +50,25 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
 <body>
     <div class="title">留言版</div>
     
-        <div class="searchArea">
-            搜尋留言 <input type="text" name="searchInput" class="searchInput" id="searchInput">
-            <button type="button" class="btn btn-outline-primary" onClick="searchComment()">搜尋</button>
-        </div>
+        <form action="searchComment.php" method="get">
+            <div class="searchArea">
+                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput" value="<?php echo $searchText?>">
+                <button type="submit" class="btn btn-outline-primary" onSubmit="searchComment()">搜尋</button>
+            </div>
+        </form>
+
+        <div id="containerArea">
 
         <?php
+        if( $totalRow == 0){
+            echo "<script type='text/javascript'>alert('Oops! 沒有任何查詢結果'); history.go(-1);</script>";
+        }
+
         while($row_result = $result->fetch_assoc()){
             echo ' <div class="container">
                         <div class="contentArea" id="contentArea'.$row_result["commentNo"].'">
                             <div class="avatar">
-                                <img src="./assets/img/'. $row_result["memAvatar"] .'" alt="avatar">
+                                <img src="./assets/img/member/'. $row_result["memAvatar"] .'" alt="avatar">
                             </div>
                             <div class="memContent">
                                 <div class="memberName">'.$row_result["memName"].'</div>
@@ -62,7 +80,7 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
                         </div>
                         <div class="actionArea">
                             <div class="edit">
-                                <a href="update.php?page='.$pageNumber.'&commentNo='.$row_result["commentNo"].'" class="btn btn-outline-secondary">編輯</a>
+                                <a href="update.php?page='.$pageNumber.'&commentNo='.$row_result["commentNo"].''.$searchHref.'" class="btn btn-outline-secondary">編輯</a>
                             </div>
                             <div class="delete">
                                 <a href="javascript:void(0)" onClick="dropData('.$row_result["commentNo"].')" class="btn btn-outline-warning">刪除</a>
@@ -73,15 +91,18 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
                     </div>';
         }
         ?>
-        <div class="pagination_block">
-            <ul class="pagination">
-                <?php
+        </div>
 
-                for($i=1; $i<=$totalPage; $i++){
-                    if($i==$pageNumber){
-                        echo '<li><a href="message.php?page='.$i.'" class="on">'.$i.'</a></li>';
-                    }else{
-                        echo '<li><a href="message.php?page='.$i.'">'.$i.'</a></li>';
+        <div class="pagination_block">
+            <ul class="pagination" id="pagination">
+                <?php
+                if($totalRow > 3){
+                    for($i=1; $i<=$totalPage; $i++){
+                        if($i==$pageNumber){
+                            echo '<li><a href="message.php?page='.$i.''.$searchHref.'" class="on">'.$i.'</a></li>';
+                        }else{
+                            echo '<li><a href="message.php?page='.$i.''.$searchHref.'">'.$i.'</a></li>';
+                        }
                     }
                 }
                 ?>
@@ -91,56 +112,14 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
     <form action="insert.php" method="post" class="insert">
         <div class="msgContainer">
             <div class="avatar commentAvatar">
-                <img src="./assets/img/memDefault.png" alt="avatar">
+                <img src="./assets/img/member/memDefault.png" alt="avatar">
                 <div class="username">訪客</div>
             </div>
-            <textarea name="content" id="content" cols="50" rows="5"></textarea>
+            <textarea name="content" id="content" cols="50" rows="5" required></textarea>
         </div>
         <button type="submit" value="send" class="btn btn-outline-primary">送出</button>
     </form>
     <script>
-        function searchComment(){
-            let searchInput = document.getElementById("searchInput");
-            let url = `http://localhost/msgboard/searchComment.php?q=${searchInput.value}`;
-            axios.get(url)
-            .then(res => showComment(res.data))
-            .catch(err => console.log(err))
-        }
-  
-        // 搜尋框文字為空，重新show出所有留言
-        function resetPage(){
-            console.log("resetPage")
-            let allcontainer = document.querySelectorAll(".container");
-            if(searchInput.value.length == 0){
-                for (let i = 0; i < allcontainer.length; i++) {
-                    allcontainer[i].className = "container"    
-                }
-            }
-        }
-
-        // 顯示符合的留言
-        function showComment(data){
-            if(data.length==0){
-                alert("Oops... 沒有符合的留言")
-            }else{
-                let allcomment = document.querySelectorAll(".hiddenInput");
-                var arr = Array.prototype.slice.call( allcomment );
-
-                for(let i=0; i<data.length; i++){
-                    for (let j = 0; j < arr.length; j++) {
-                        // 只留下要隱藏的container
-                        if(data[i]==arr[j].value){  
-                            arr.splice(j,1)
-                            break;
-                        }
-                    }
-                }
-
-                for(let i=0; i<arr.length; i++){  
-                    arr[i].parentNode.parentNode.className = "container hide";                
-                }
-            }
-        }
 
         function dropData(params, e) {
             if(confirm("確認刪除留言?")){
@@ -150,17 +129,6 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
             }
         }
 
-
-        window.onload = function(){
-            searchInput.addEventListener("input",resetPage,false);
-            searchInput.addEventListener("keydown",function(e){
-                if(e.keyCode === 13){
-                    searchComment();
-                }
-            },false);
-
-
-        }
     </script>
 </body>
 
