@@ -37,16 +37,13 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
 
 <!DOCTYPE html>
 <html lang="zh-TW">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js" integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="./assets/css/index.css" type="text/css">
     <link rel="stylesheet" href="./assets/css/message.css" type="text/css">
-    <title>Document</title>
+    <title>留言版</title>
 </head>
-
 <body>
     <div class="title">留言版</div>
     
@@ -113,14 +110,13 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
         <div class="msgContainer">
             <div class="avatar commentAvatar">
                 <img src="./assets/img/member/memDefault.png" alt="avatar">
-                <div class="username">訪客</div>
+                <div class="username">哆啦美</div>
             </div>
             <textarea name="content" id="content" cols="50" rows="5" required></textarea>
         </div>
         <button type="submit" value="send" class="btn btn-outline-primary">送出</button>
     </form>
     <script>
-
         function dropData(params, e) {
             if(confirm("確認刪除留言?")){
                 window.location =  `deleteData.php?commentNo=${params}`;
@@ -128,8 +124,6 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
                 e.preventDefault();
             }
         }
-
     </script>
 </body>
-
 </html>

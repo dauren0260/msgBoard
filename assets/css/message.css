@@ -105,9 +105,11 @@ pre{
 .msgContainer .btn-outline-primary {
     vertical-align: bottom;
 }
-
+.insert{
+    width: 700px;
+}
 .insert button{
-    margin-left: 465px;
+    margin-left: 120px;
     margin-top: 10px;
 }
 
@@ -166,7 +168,7 @@ pre{
 /* pagination */
 .pagination_block {
     text-align: right;
-    padding-right: 300px;
+    padding-right: 220px;
 }
 
 .pagination {
