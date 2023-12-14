@@ -1,0 +1,28 @@
+.signup{
+    width: 250px;
+}
+
+tbody td{
+    text-align: right;
+}
+
+.accountTd{
+    position: relative;
+}
+
+.isValid, .unValid{
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 7px;
+}
+.isValid{
+    color: #6DB9EF;
+}
+.unValid{
+    color: red;
+}
+.isValid.show,
+.unValid.show{
+    display: inline-block;
+}
