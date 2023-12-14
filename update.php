@@ -4,6 +4,11 @@ require_once("connectDB.php");
 if(isset($_GET['page'])){
     $pageNumber = $_GET['page'];
 }
+if(isset($_GET['search'])){
+    $searchText = "&search=".$_GET['search']."";
+}else{
+    $searchText = "";
+}
 
 $sql = "SELECT  m.commentNo, m.comment, m.commentTime, 
                 b.id, b.memName, b.memAvatar 
@@ -32,7 +37,7 @@ $stmt->fetch();
         <form action="updateDB.php" method="post" class="update">
             <div class="msgContainer">
                 <div class="avatar commentAvatar">
-                    <?php echo '<img src="./assets/img/'.$avatar.'" alt="avatar" />'; ?>
+                    <?php echo '<img src="./assets/img/member/'.$avatar.'" alt="avatar" />'; ?>
                     <div class="username"><?php echo $name; ?></div>
                 </div>
                 <textarea name="content" id="content" cols="80" rows="15"><?php echo $comment; ?></textarea>
@@ -40,7 +45,7 @@ $stmt->fetch();
             </div>
             <div class="actionArea"> 
                 <button type="button" value="send" class="btn btn-outline-secondary">
-                    <a href="message.php?page=<?php echo $pageNumber; ?>">取消</a>
+                    <a href="message.php?page=<?php echo $pageNumber?><?php echo $searchText?>">取消</a>
                 </button>
                 <button type="submit" value="send" class="btn btn-outline-primary">送出</button>
             </div>

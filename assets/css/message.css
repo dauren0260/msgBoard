@@ -81,6 +81,12 @@ form {
     margin-top: 10px;
 }
 
+pre{
+    white-space:pre-line;
+    font-size: 16px;
+    margin: 0;
+}
+
 .msgContainer {
     text-align: center;
     margin-top: 50px;
