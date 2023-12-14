@@ -42,29 +42,15 @@ $stmt->fetch();
                 </div>
                 <textarea name="content" id="content" cols="80" rows="15"><?php echo $comment; ?></textarea>
                 <input type="hidden" name="commentNo"  value="<?php echo $commentNo; ?>">
-                <input type="hidden" name="prevComment"  value="<?php echo $comment; ?>">
             </div>
             <div class="actionArea"> 
                 <button type="button" value="send" class="btn btn-outline-secondary">
                     <a href="message.php?page=<?php echo $pageNumber?><?php echo $searchText?>">取消</a>
                 </button>
-                <button type="submit" value="send" class="btn btn-outline-primary" onSubmit="checkForm">送出</button>
+                <button type="submit" value="send" class="btn btn-outline-primary">送出</button>
             </div>
         </form>
     
 </body>
-
-<script>
-function checkForm(){
-    let prevComment = document.getElementsByName("prevComment")[0].value;
-    let currentComment = document.getElementsByName("content")[0].value;
-
-    if(prevComment != currentComment){
-        history.go(-1)
-    }
-    return false;
-}
-
-</script>
 </html>
 

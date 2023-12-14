@@ -1,7 +1,7 @@
 <?php
 require_once("connectDB.php");
 
-$content = $_POST["content"];
+$content = htmlentities($_POST["content"], ENT_QUOTES, 'utf-8');
 
 $sql = "INSERT INTO message (memberId, comment,commentTime) VALUES (1, ?, NOW())";
 

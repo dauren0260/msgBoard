@@ -52,7 +52,7 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
     
         <form action="searchComment.php" method="get">
             <div class="searchArea">
-                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput" value="<?php echo $searchText?>">
+                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput">
                 <button type="submit" class="btn btn-outline-primary" onSubmit="searchComment()">搜尋</button>
             </div>
         </form>
@@ -61,7 +61,7 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
 
         <?php
         if( $totalRow == 0){
-            echo "<script type='text/javascript'>alert('Oops! 沒有任何查詢結果'); history.go(-1);</script>";
+            echo "<script type='text/javascript'>alert('Oops! 沒有任何查詢結果');</script>";
         }
 
         while($row_result = $result->fetch_assoc()){
