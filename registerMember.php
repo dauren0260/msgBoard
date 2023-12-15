@@ -2,9 +2,9 @@
 
 require_once("connectDB.php");
 
-$account = htmlentities($_POST["account"], ENT_QUOTES, 'utf-8');
-$password = htmlentities($_POST["password"], ENT_QUOTES, 'utf-8');
-$memberName = htmlentities($_POST["memberName"], ENT_QUOTES, 'utf-8');
+$account = $_POST["account"];
+$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+$memberName = $_POST["memberName"];
 
 $email = $_POST["email"];
 //消毒並確認email格式
@@ -18,13 +18,12 @@ if (filter_var($filterEmail,FILTER_VALIDATE_EMAIL)){
 $sql = "INSERT INTO member (memAccount,memPassword, memEmail, memName)
     VALUES (?,?,?,?)";
 
-$stmt = $db_link->prepare($sql);
+$stmt = $dbLink->prepare($sql);
 $stmt->bind_param("ssss",$account, $password, $email, $memberName);
 
 if($stmt->execute()){
     echo "<script type='text/javascript'>alert('註冊成功!'); window.location = 'index.php'</script>";
 }else{
     echo "<script type='text/javascript'>alert('註冊失敗!<br/>請重新註冊'); window.location = 'signup.php'</script>";
-
 }
 ?>

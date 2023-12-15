@@ -26,3 +26,11 @@ tbody td{
 .unValid.show{
     display: inline-block;
 }
+
+.accountTd button.btn {
+    position: absolute;
+    top: 4px;
+    padding: 3px 6px;
+    right: -50px;
+    font-size: x-small;
+}
