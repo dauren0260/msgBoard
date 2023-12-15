@@ -21,13 +21,13 @@
                 <tr>
                     <td class="accountTd">
                         <label>
-                            帳號： <input type="text" name="account" required id="accountInput" />
+                            帳號：<input type="text" name="account" required id="accountInput" minlength="4">
                         </label>
                         <i class="fa-solid fa-check isValid" id="checkIcon"></i>
                     </td>
                     <td>
                         <label>
-                            密碼： <input type="password" name="password" required>
+                            密碼：<input type="password" name="password" required minlength="4">
                         </label>
                     </td>
                     <td>
@@ -37,19 +37,19 @@
                     </td>
                     <td>
                         <label>
-                            名字： <input type="text" name="memberName" required>
+                            名字：<input type="text" name="memberName" required>
                         </label>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td><button type="submit" value="signup" class="btn btn-outline-primary">註冊</button></td>
+                    <td><button type="submit" value="signup" class="btn btn-outline-primary" id="signupBtn">註冊</button></td>
                 </tr>
                 <tr>
                     <td>
                         <a href="index.php">
-                            <button type="submit" value="login" class="btn btn-outline-secondary">返回登入</button>
+                            <button type="button" value="login" class="btn btn-outline-secondary">返回登入</button>
                         </a>
                     </td>
                 </tr>
@@ -58,25 +58,49 @@
     </form>
 
     <script type="text/javascript">
-        accountInput.addEventListener("blur",checkAccount,false);
+        accountInput.addEventListener("blur",checkInput,false);
+        accountInput.addEventListener("input",checkInputIcon,false);
+        signupBtn.addEventListener("submit",checkForm,false);
         let checkIcon = document.getElementById("checkIcon")
 
-        function checkAccount(){
-            if(this.value != '' || this.value != ' '){
+        function checkInput(){
+            if((this.value == '') || (this.value == ' ')){
+
+                checkIcon.className = "fa-solid fa-check isValid"
+                alert(`${this.previousSibling.nodeValue.slice(0,-1)}不可為空`);
+
+            }else if(this.name == "account" && this.value.length >= 4){
+                // 發送請求確認帳號沒有重複
                 axios.get(`checkAccount.php?name=${this.value}`)
                 .then( res => {
                     if(res.data>0){
                         alert("此帳號已被使用");
                         this.value = '';
                     }else{
-                        checkIcon.className += " show"
+                        checkIcon.classList.add('show')
                     }
                 })
-            }else{
-                alert("不可為空");
-
+            }else if(this.name == "account" && this.value.length < 4){
+                alert("帳號不可低於四位英數字")
+                checkIcon.classList.toggle('show')
             }
         }
+
+        function checkForm(){
+           if(checkIcon.classList.contains('show')){
+                return true
+            }else{
+                console.log('checkForm false')
+                return false
+            }
+        }
+
+        function checkInputIcon(){
+            if((this.value == '') || (this.value == ' ')){
+                checkIcon.className = "fa-solid fa-check isValid"
+            }
+        }
+
 
     </script>
 </body>

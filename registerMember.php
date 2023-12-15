@@ -20,10 +20,11 @@ $sql = "INSERT INTO member (memAccount,memPassword, memEmail, memName)
 
 $stmt = $db_link->prepare($sql);
 $stmt->bind_param("ssss",$account, $password, $email, $memberName);
-$stmt->execute();
 
-header("Location: index.php");
+if($stmt->execute()){
+    echo "<script type='text/javascript'>alert('註冊成功!'); window.location = 'index.php'</script>";
+}else{
+    echo "<script type='text/javascript'>alert('註冊失敗!<br/>請重新註冊'); window.location = 'signup.php'</script>";
 
-
-
+}
 ?>
