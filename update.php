@@ -1,11 +1,11 @@
 <?php
 require_once("connectDB.php");
 
-if(isset($_GET['page'])){
-    $pageNumber = $_GET['page'];
+if(isset($_GET["page"])){
+    $pageNumber = $_GET["page"];
 }
-if(isset($_GET['search'])){
-    $searchText = "&search=".$_GET['search']."";
+if(isset($_GET["search"])){
+    $searchText = "&search=".$_GET["search"]."";
 }else{
     $searchText = "";
 }
@@ -17,7 +17,7 @@ $sql = "SELECT  m.commentNo, m.comment, m.commentTime,
         ON (m.memberId = b.id)
         WHERE m.commentNo = ?";
 
-$stmt = $db_link->prepare($sql);
+$stmt = $dbLink->prepare($sql);
 $stmt->bind_param("s", $_GET["commentNo"]);
 $stmt->execute();
 $stmt->bind_result($commentNo, $comment, $time, $id, $name, $avatar);
@@ -44,10 +44,10 @@ $stmt->fetch();
                 <input type="hidden" name="commentNo"  value="<?php echo $commentNo; ?>">
             </div>
             <div class="actionArea"> 
-                <button type="button" value="send" class="btn btn-outline-secondary">
+                <button type="button" value="send" class="btn btnSecondary">
                     <a href="message.php?page=<?php echo $pageNumber?><?php echo $searchText?>">取消</a>
                 </button>
-                <button type="submit" value="send" class="btn btn-outline-primary">送出</button>
+                <button type="submit" value="send" class="btn btnPrimary">送出</button>
             </div>
         </form>
     

@@ -19,6 +19,11 @@ form {
     text-align: center;
 }
 
+#containerArea{
+    width: 800px;
+    margin: 0 auto;
+}
+
 .container {
     margin: 10px auto;
     width: 800px;
@@ -102,7 +107,7 @@ pre{
     resize: none;
 }
 
-.msgContainer .btn-outline-primary {
+.msgContainer .btnPrimary {
     vertical-align: bottom;
 }
 .insert{
@@ -113,8 +118,8 @@ pre{
     margin-top: 10px;
 }
 
-.btn-outline-secondary,
-.btn-outline-warning {
+.btnSecondary,
+.btnWarning {
     display: inline-block;
     text-decoration: none;
 }
@@ -166,9 +171,8 @@ pre{
 }
 
 /* pagination */
-.pagination_block {
+.paginationBlock {
     text-align: right;
-    padding-right: 220px;
 }
 
 .pagination {

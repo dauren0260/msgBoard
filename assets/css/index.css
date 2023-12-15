@@ -35,29 +35,29 @@ tfoot tr{
 .btn:hover{
     cursor: pointer;
 }
-.btn-outline-primary {
+.btnPrimary {
     border-color: #6DB9EF;
     color: #6DB9EF;
 }
-.btn-outline-primary:hover {
+.btnPrimary:hover {
     background-color: #6DB9EF;
     border-color: #6DB9EF;
     color: #fff;
 }
-.btn-outline-secondary {
+.btnSecondary {
     border-color: #a9a9a9;
     color: #a9a9a9;
 }
-.btn-outline-secondary:hover {
+.btnSecondary:hover {
     background-color: #a9a9a9;
     border-color: #a9a9a9;
     color: #fff;
 }
-.btn-outline-warning {
+.btnWarning {
     border-color: #e36d6d;
     color: #e36d6d;
 }
-.btn-outline-warning:hover {
+.btnWarning:hover {
     background-color: #e36d6d;
     border-color: #e36d6d;
     color: #fff;

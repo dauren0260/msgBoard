@@ -1,15 +1,15 @@
 <?php
-$dbhost = "localhost";
+$dbHost = "localhost";
 $user = "root";
-$password = "root1204";
-$dbname = "board";
+$passWord = "root1204";
+$dbName = "board";
 
-$db_link = new mysqli($dbhost, $user, $password, $dbname);
+$dbLink = new mysqli($dbHost, $user, $passWord, $dbName);
 
-if($db_link->connect_error != ""){
+if($dbLink->connect_error != ""){
     echo "failed connect to Database";
 }else{
-    $db_link -> query("SET NAMES 'utf8'");
+    $dbLink -> query("SET NAMES 'utf8'");
 }
 
 

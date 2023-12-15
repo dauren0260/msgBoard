@@ -4,8 +4,8 @@ require_once("connectDB.php");
 $pageRow = 3;  //每頁顯示3筆
 $pageNumber = 1;  //當前頁數
 
-if(isset($_GET['page'])){
-    $pageNumber = $_GET['page'];
+if(isset($_GET["page"])){
+    $pageNumber = $_GET["page"];
 }
 
 $startRow = ($pageNumber - 1) * $pageRow;  //本頁開始的筆數
@@ -16,8 +16,8 @@ $sql = "SELECT b.id, b.memName, b.memAvatar,
         LEFT JOIN member AS b
         ON (m.memberId = b.id)";
 
-if(isset($_GET['search'])){
-    $searchText = trim($_GET['search']);
+if(isset($_GET["search"])){
+    $searchText = trim($_GET["search"]);
     $searchHref = "&search=".$searchText."";
     $sql = $sql . "WHERE m.comment LIKE '%".$searchText."%'";
 }else{
@@ -27,9 +27,9 @@ if(isset($_GET['search'])){
 
 $sql = $sql . "ORDER BY m.commentTime DESC";
 
-$sql_limit = $sql . " LIMIT " . $startRow . "," . $pageRow;
-$allResult = $db_link->query($sql);
-$result = $db_link->query($sql_limit);
+$sqlLimit = $sql . " LIMIT " . $startRow . "," . $pageRow;
+$allResult = $dbLink->query($sql);
+$result = $dbLink->query($sqlLimit);
 
 $totalRow = $allResult->num_rows;   //總筆數
 $totalPage = ceil($totalRow/$pageRow);  //總頁數
@@ -49,61 +49,59 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
     
         <form action="searchComment.php" method="get">
             <div class="searchArea">
-                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput">
-                <button type="submit" class="btn btn-outline-primary" onSubmit="searchComment()">搜尋</button>
+                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput" autocomplete="off">
+                <button type="submit" class="btn btnPrimary" onSubmit="searchComment()">搜尋</button>
             </div>
         </form>
 
         <div id="containerArea">
-
         <?php
         if( $totalRow == 0){
             echo "<script type='text/javascript'>alert('Oops! 沒有任何查詢結果');</script>";
         }
 
-        while($row_result = $result->fetch_assoc()){
+        while($rowResult = $result->fetch_assoc()){
             echo ' <div class="container">
-                        <div class="contentArea" id="contentArea'.$row_result["commentNo"].'">
+                        <div class="contentArea" id="contentArea'.$rowResult["commentNo"].'">
                             <div class="avatar">
-                                <img src="./assets/img/member/'. $row_result["memAvatar"] .'" alt="avatar">
+                                <img src="./assets/img/member/'. $rowResult["memAvatar"] .'" alt="avatar">
                             </div>
                             <div class="memContent">
-                                <div class="memberName">'.$row_result["memName"].'</div>
-                                <div class="commentTime">'.$row_result["commentTime"].'</div>
+                                <div class="memberName">'.$rowResult["memName"].'</div>
+                                <div class="commentTime">'.$rowResult["commentTime"].'</div>
                             </div>
-                            <div class="msgContent showContent" id="msgContent'.$row_result["commentNo"].'">
-                                '.nl2br($row_result["comment"]).'
+                            <div class="msgContent showContent" id="msgContent'.$rowResult["commentNo"].'">
+                                '.nl2br($rowResult["comment"]).'
                             </div>
                         </div>
                         <div class="actionArea">
                             <div class="edit">
-                                <a href="update.php?page='.$pageNumber.'&commentNo='.$row_result["commentNo"].''.$searchHref.'" class="btn btn-outline-secondary">編輯</a>
+                                <a href="update.php?page='.$pageNumber.'&commentNo='.$rowResult["commentNo"].''.$searchHref.'" class="btn btnSecondary">編輯</a>
                             </div>
                             <div class="delete">
-                                <a href="javascript:void(0)" onClick="dropData('.$row_result["commentNo"].')" class="btn btn-outline-warning">刪除</a>
+                                <a href="javascript:void(0)" onClick="dropData('.$rowResult["commentNo"].')" class="btn btnWarning">刪除</a>
                             </div>
-                            <input type="hidden" name="commentNo'.$row_result["commentNo"].'"  value="'.$row_result["commentNo"] . '" class="hiddenInput">
-                            <input type="hidden" name="memId'.$row_result["commentNo"].'" value="'.$row_result["id"] . '">                    
+                            <input type="hidden" name="commentNo'.$rowResult["commentNo"].'"  value="'.$rowResult["commentNo"] . '" class="hiddenInput">
+                            <input type="hidden" name="memId'.$rowResult["commentNo"].'" value="'.$rowResult["id"] . '">                    
                         </div>
                     </div>';
         }
         ?>
-        </div>
-
-        <div class="pagination_block">
-            <ul class="pagination" id="pagination">
-                <?php
-                if($totalRow > 3){
-                    for($i=1; $i<=$totalPage; $i++){
-                        if($i==$pageNumber){
-                            echo '<li><a href="message.php?page='.$i.''.$searchHref.'" class="on">'.$i.'</a></li>';
-                        }else{
-                            echo '<li><a href="message.php?page='.$i.''.$searchHref.'">'.$i.'</a></li>';
+            <div class="paginationBlock">
+                <ul class="pagination" id="pagination">
+                    <?php
+                    if($totalRow > 3){
+                        for($i=1; $i<=$totalPage; $i++){
+                            if($i==$pageNumber){
+                                echo '<li><a href="message.php?page='.$i.''.$searchHref.'" class="on">'.$i.'</a></li>';
+                            }else{
+                                echo '<li><a href="message.php?page='.$i.''.$searchHref.'">'.$i.'</a></li>';
+                            }
                         }
                     }
-                }
-                ?>
-            </ul>
+                    ?>
+                </ul>
+            </div>
         </div>
 
     <form action="insert.php" method="post" class="insert">
@@ -114,7 +112,7 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
             </div>
             <textarea name="content" id="content" cols="50" rows="5" required></textarea>
         </div>
-        <button type="submit" value="send" class="btn btn-outline-primary">送出</button>
+        <button type="submit" value="send" class="btn btnPrimary">送出</button>
     </form>
     <script>
         function dropData(params, e) {
