@@ -45,7 +45,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td><button type="submit" value="signup" class="btn btnPrimary" id="signupBtn">註冊</button></td>
+                    <td><button type="submit" value="signup" class="btn btnPrimary" id="signupBtn" onClick="return checkForm()">註冊</button></td>
                 </tr>
                 <tr>
                     <td>
@@ -91,7 +91,7 @@
            if(checkIcon.classList.contains('show')){
                 return true
             }else{
-                console.log('checkForm false')
+                alert("請檢查帳號可否使用!")
                 return false
             }
         }

@@ -6,7 +6,7 @@ $sql = "SELECT memAccount
         FROM member 
         WHERE memAccount = '".$name."'";
 
-$stmt = $db_link->query($sql);
+$stmt = $dbLink->query($sql);
 $result_num = $stmt->num_rows;
 echo json_encode($result_num);
 

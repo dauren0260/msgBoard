@@ -1,13 +1,31 @@
+.logo{
+    text-align: center;
+    width: 300px;
+    margin: 0 auto;
+    position: relative;
+    font-size: 18px;
+}
+
+.logo img{
+    width: 150px;
+}
+
+.logo .infoArea{
+    position: absolute;
+    top: 50px;
+    right: -230px;
+}
+
 form{
     width: 235px;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .title{
     text-align: center;
     font-size: 20px;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 tbody td{

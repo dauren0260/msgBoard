@@ -1,6 +1,6 @@
 <?php
 require_once("connectDB.php");
-
+session_start();
 $account = $_POST["account"];
 $postPassword = $_POST["password"];
 
@@ -16,6 +16,10 @@ if($stmt->execute()){
     $stmt->fetch();
 
     if (password_verify($postPassword, $hashPassword)) {
+
+        $_SESSION["userLogIn"] = true;
+        $_SESSION["userAccount"] = $account;
+
         echo "<script type='text/javascript'>window.location = 'message.php'</script>";
     } else {
         echo "<script type='text/javascript'>alert('帳號或密碼錯誤'); window.location = 'index.php'</script>";

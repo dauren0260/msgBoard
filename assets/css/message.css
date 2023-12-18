@@ -2,10 +2,6 @@ form {
     width: auto;
 }
 
-.title {
-    margin-bottom: 50px;
-}
-
 .searchInput {
     padding: 6px 12px;
     vertical-align: middle;
@@ -139,6 +135,10 @@ pre{
 
 .container .contentArea textarea {
     resize: none;
+}
+
+.container .actionArea.hide {
+    display: none;
 }
 
 .container .actionArea div {
