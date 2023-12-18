@@ -88,18 +88,57 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
         }
         ?>
             <div class="paginationBlock">
-                <ul class="pagination" id="pagination">
-                    <?php
-                    if($totalRow > 3){
-                        for($i=1; $i<=$totalPage; $i++){
-                            if($i==$pageNumber){
-                                echo '<li><a href="message.php?page='.$i.''.$searchHref.'" class="on">'.$i.'</a></li>';
+            <ul class="pagination" id="pagination">
+                <?php
+                    $basePageRow = 5; //每組分頁有五頁
+                    if($totalRow > $pageRow){
+
+                        // 小於等於5頁，直接打印頁碼
+                        if( $totalPage <= $basePageRow){
+                            for( $i=1; $i <= $totalPage; $i++){
+                                if($i==$pageNumber){
+                                    echo '<li><a href="message.php?page='.$i.''.$searchHref.'" class="on">'.$i.'</a></li>';
+                                }else{
+                                    echo '<li><a href="message.php?page='.$i.''.$searchHref.'">'.$i.'</a></li>';
+                                }
+                            }
+                        }else{
+                            // 現在是第幾組分頁
+                            $currentGroup = ceil($pageNumber/$basePageRow);
+                            
+                            //起始頁 1、6、11
+                            $startPage = $basePageRow * ($currentGroup-1) + 1;
+
+                            //下五組頁數的起始頁 6、11、16
+                            $nextPage =  $startPage + $basePageRow;  
+                            
+                            // 計算頁數迴圈最後一圈的數字 $loopPage 
+                            if($basePageRow * $currentGroup >= $totalPage){
+                                $loopPage = $totalPage;
+                                $nextPage = false;
                             }else{
-                                echo '<li><a href="message.php?page='.$i.''.$searchHref.'">'.$i.'</a></li>';
+                                $loopPage = $basePageRow*$currentGroup;
+                            }
+
+                            // 起始頁不為1時，前五頁的<<按鈕要出現，此時$currentGroup至少為2以上
+                            if($startPage != 1){
+                                echo '<li><a href="message.php?page='.(($currentGroup-1)*$basePageRow).''.$searchHref.'">&#171;</a></li>';
+                            }
+
+                            for( $i = $startPage; $i <= $loopPage; $i++){
+                                if($i==$pageNumber){
+                                    echo '<li><a href="message.php?page='.$i.''.$searchHref.'" class="on">'.$i.'</a></li>';
+                                }else{
+                                    echo '<li><a href="message.php?page='.$i.''.$searchHref.'">'.$i.'</a></li>';
+                                }
+                            }
+                            // 當前頁數不等於下五組頁碼時才出現
+                            if($nextPage && $pageNumber < $nextPage){
+                                echo '<li><a href="message.php?page='.$nextPage .''.$searchHref.'">&#187;</a></li>';
                             }
                         }
                     }
-                    ?>
+                ?>
                 </ul>
             </div>
         </div>
