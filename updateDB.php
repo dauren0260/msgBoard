@@ -8,7 +8,7 @@ $sql = "UPDATE message
         WHERE commentNo = ?";
 
 $stmt = $dbLink->prepare($sql);
-$stmt->bind_param("ss", $content, $_POST["commentNo"]);
+$stmt->bind_param("si", $content, $_POST["commentNo"]);
 $stmt->execute();
 $stmt->close();
 

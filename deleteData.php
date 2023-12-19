@@ -5,7 +5,7 @@ $sql = "DELETE FROM message
         WHERE commentNo = ?";
 
 $stmt = $dbLink->prepare($sql);
-$stmt->bind_param("s" ,$_GET["commentNo"]);
+$stmt->bind_param("i" ,$_GET["commentNo"]);
 $stmt->execute();
 $stmt->close();
 

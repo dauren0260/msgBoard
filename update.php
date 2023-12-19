@@ -18,7 +18,7 @@ $sql = "SELECT  m.commentNo, m.comment, m.commentTime,
         WHERE m.commentNo = ?";
 
 $stmt = $dbLink->prepare($sql);
-$stmt->bind_param("s", $_GET["commentNo"]);
+$stmt->bind_param("i", $_GET["commentNo"]);
 $stmt->execute();
 $stmt->bind_result($commentNo, $comment, $time, $id, $name, $avatar);
 $stmt->fetch();
@@ -37,20 +37,17 @@ $stmt->fetch();
         <form action="updateDB.php" method="post" class="update">
             <div class="msgContainer">
                 <div class="avatar commentAvatar">
-                    <?php echo '<img src="./assets/img/member/'.$avatar.'" alt="avatar" />'; ?>
+                    <img src="./assets/img/member/<?php echo $avatar ?>" alt="avatar" />';
                     <div class="username"><?php echo $name; ?></div>
                 </div>
                 <textarea name="content" id="content" cols="80" rows="15"><?php echo $comment; ?></textarea>
                 <input type="hidden" name="commentNo"  value="<?php echo $commentNo; ?>">
             </div>
             <div class="actionArea"> 
-                <button type="button" value="send" class="btn btnSecondary">
-                    <a href="message.php?page=<?php echo $pageNumber?><?php echo $searchText?>">取消</a>
-                </button>
+                <a href="message.php?page=<?php echo $pageNumber?><?php echo $searchText?>" class="btn btnSecondary">取消</a>
                 <button type="submit" value="send" class="btn btnPrimary">送出</button>
             </div>
         </form>
-    
 </body>
 </html>
 

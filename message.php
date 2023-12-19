@@ -47,9 +47,9 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
 <body>
     <div class="title">留言版</div>
     
-        <form action="searchComment.php" method="get">
+        <form action="message.php" method="get">
             <div class="searchArea">
-                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput" autocomplete="off">
+                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput" autocomplete="off" value=<?php echo $searchText?>>
                 <button type="submit" class="btn btnPrimary" onSubmit="searchComment()">搜尋</button>
             </div>
         </form>
