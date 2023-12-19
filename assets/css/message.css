@@ -93,6 +93,10 @@ pre{
     margin-top: 50px;
 }
 
+.msgContainer .avatar{
+    width: 80px;
+}
+
 .msgContainer button{
     display: block;
 }
@@ -110,7 +114,7 @@ pre{
     width: 700px;
 }
 .insert button{
-    margin-left: 120px;
+    margin-left: 135px;
     margin-top: 10px;
 }
 
