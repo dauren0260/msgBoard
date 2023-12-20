@@ -1,5 +1,6 @@
 <?php
 require_once("connectDB.php");
+require_once("memberInfo.php");
 
 $pageRow = 3;  //每頁顯示3筆
 $pageNumber = 1;  //當前頁數
@@ -13,7 +14,7 @@ $startRow = ($pageNumber - 1) * $pageRow;  //本頁開始的筆數
 if(isset($_GET["search"]) && ($_GET["search"]!="")){
     
     $searchText = '%'.trim($_GET["search"]).'%';
-    $searchHref = "&search=".$searchText."";
+    $searchHref = "&search=".trim($_GET["search"])."";
     
     // 有搜尋關鍵字時的sql語句
     $sql = "SELECT b.id, b.memName, b.memAvatar, 
@@ -30,7 +31,8 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
 
     $result = $stmt->get_result();
     $totalRow = $result->num_rows;   //總筆數
-    
+    $totalPage = ceil($totalRow/$pageRow);  //總頁數
+
     // 有搜尋關鍵字時的sql limit語句
     $sqlLimit = "SELECT b.id, b.memName, b.memAvatar, 
                 m.commentNo, m.comment, m.commentTime 
@@ -44,7 +46,7 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
     $stmt->bind_param("sii", $searchText, $startRow,$pageRow);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+    // print_r($result);
 }else{
     $searchText = "";
     $searchHref = "";
@@ -84,11 +86,15 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js" integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="./assets/css/index.css" type="text/css">
     <link rel="stylesheet" href="./assets/css/message.css" type="text/css">
     <title>留言版</title>
 </head>
 <body>
+    <?php
+        require_once("header.php");
+    ?>
     <div class="title">留言版</div>
     
         <form action="message.php" method="get">
@@ -104,6 +110,11 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
             echo "<script type='text/javascript'>alert('Oops! 沒有任何查詢結果');</script>";
         }else{
             while($rowResult = $result->fetch_assoc()){
+                if($rowResult["id"] ==$id){
+                    $actionArea = "actionArea";
+                }else{
+                    $actionArea = "actionArea hide";
+                }
                 echo ' <div class="container">
                             <div class="contentArea" id="contentArea'.$rowResult["commentNo"].'">
                                 <div class="avatar">
@@ -117,12 +128,12 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
                                     '.nl2br($rowResult["comment"]).'
                                 </div>
                             </div>
-                            <div class="actionArea">
+                            <div class="'. $actionArea .'">
                                 <div class="edit">
                                     <a href="update.php?page='.$pageNumber.'&commentNo='.$rowResult["commentNo"].''.$searchHref.'" class="btn btnSecondary">編輯</a>
                                 </div>
                                 <div class="delete">
-                                    <a href="javascript:void(0)" onClick="dropData('.$rowResult["commentNo"].')" class="btn btnWarning">刪除</a>
+                                    <a href="javascript:void(0)" class="btn btnWarning delBtn">刪除</a>
                                 </div>
                                 <input type="hidden" name="commentNo'.$rowResult["commentNo"].'"  value="'.$rowResult["commentNo"] . '" class="hiddenInput">
                                 <input type="hidden" name="memId'.$rowResult["commentNo"].'" value="'.$rowResult["id"] . '">                    
@@ -137,7 +148,6 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
                 <?php
                     $basePageRow = 5; //每組分頁有五頁
                     if($totalRow > $pageRow){
-
                         // 小於等於5頁，直接打印頁碼
                         if( $totalPage <= $basePageRow){
                             for( $i=1; $i <= $totalPage; $i++){
@@ -192,19 +202,33 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
         <div class="msgContainer">
             <div class="avatar commentAvatar">
                 <img src="./assets/img/member/memDefault.png" alt="avatar">
-                <div class="username">哆啦美</div>
+                <div class="username"><?php echo $memName?></div>
             </div>
-            <textarea name="content" id="content" cols="50" rows="5" required></textarea>
+            <div class="textArea">
+                <textarea name="content" id="content" required></textarea>
+                <button type="submit" value="send" class="btn btnPrimary">送出</button>
+            </div>
         </div>
-        <button type="submit" value="send" class="btn btnPrimary">送出</button>
     </form>
     <script>
-        function dropData(params, e) {
+        function dropData(e) {
+            let parent = this.parentNode.parentNode;
+            let hiddenInput = parent.querySelector(".hiddenInput").value;
+
             if(confirm("確認刪除留言?")){
                 window.location =  `deleteData.php?commentNo=${params}`;
             }else{
                 e.preventDefault();
             }
+        }
+        logOutBtn.addEventListener("click",logOut,false)
+        function logOut(){
+            axios('logOut.php').then(()=> window.location="index.php")
+        }
+
+        var allDelBtn = document.querySelectorAll(".delBtn");
+        for (let i = 0; i < allDelBtn.length; i++) {
+            allDelBtn[i].addEventListener("click",dropData,false)
         }
     </script>
 </body>

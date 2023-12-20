@@ -23,7 +23,6 @@
                         <label>
                             帳號：<input type="text" name="account" required id="accountInput" minlength="4" autocomplete="off">
                         </label>
-                        <button type="button" class="btn btnPrimary" id="checkAccountBtn">Check</button>
                         <i class="fa-solid fa-check isValid" id="checkIcon"></i>
                     </td>
                     <td>
@@ -59,7 +58,7 @@
     </form>
 
     <script type="text/javascript">
-        checkAccountBtn.addEventListener("click",checkInput,false);
+        accountInput.addEventListener("change",checkInput,false);
         accountInput.addEventListener("input",checkInputIcon,false);
         signupBtn.addEventListener("submit",checkForm,false);
         let checkIcon = document.getElementById("checkIcon")
@@ -97,9 +96,9 @@
         }
 
         function checkInputIcon(){
-            if((this.value == '') || (this.value == ' ')){
-                checkIcon.className = "fa-solid fa-check isValid"
-            }
+            // if((this.value == '') || (this.value == ' ')){
+            // }
+            checkIcon.className = "fa-solid fa-check isValid"
         }
 
 

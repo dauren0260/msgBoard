@@ -1,0 +1,13 @@
+.memberCenter .avatar img{
+    width: 200px;
+    height: 200px;
+}
+
+.memberCenter .container{
+    width: 200px;
+    margin: 0 auto;
+}
+
+.memberCenter .container div{
+    margin: 20px 0 ;
+}

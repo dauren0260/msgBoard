@@ -16,6 +16,14 @@
     right: -230px;
 }
 
+.logo .infoArea a{
+    color: #6DB9EF;
+}
+
+.logo .infoArea button{
+    margin-left: 5px;
+}
+
 form{
     width: 235px;
     margin: 0 auto;
@@ -41,13 +49,14 @@ tfoot tr{
     margin: 0 5px;
 }
 .btn{
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 2px;
     background-color: #fff;
     outline: none;
     border-width: 1px;
     border-style: solid;
     font-size: 16px;
+    text-align: center;
 }
 
 .btn:hover{

@@ -1,5 +1,6 @@
 <?php
 require_once("connectDB.php");
+require_once("memberInfo.php");
 
 if(isset($_GET["page"])){
     $pageNumber = $_GET["page"];
@@ -20,8 +21,13 @@ $sql = "SELECT  m.commentNo, m.comment, m.commentTime,
 $stmt = $dbLink->prepare($sql);
 $stmt->bind_param("i", $_GET["commentNo"]);
 $stmt->execute();
-$stmt->bind_result($commentNo, $comment, $time, $id, $name, $avatar);
+$stmt->bind_result($commentNo, $comment, $time, $memberId, $name, $avatar);
 $stmt->fetch();
+
+if($memberId != $id){
+    header("Location: message.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -42,6 +48,7 @@ $stmt->fetch();
                 </div>
                 <textarea name="content" id="content" cols="80" rows="15"><?php echo $comment; ?></textarea>
                 <input type="hidden" name="commentNo"  value="<?php echo $commentNo; ?>">
+                <input type="hidden" name="page"  value="<?php echo $_GET["page"]; ?>">
             </div>
             <div class="actionArea"> 
                 <a href="message.php?page=<?php echo $pageNumber?><?php echo $searchText?>" class="btn btnSecondary">取消</a>
