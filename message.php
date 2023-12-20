@@ -10,29 +10,73 @@ if(isset($_GET["page"])){
 
 $startRow = ($pageNumber - 1) * $pageRow;  //本頁開始的筆數
 
-$sql = "SELECT b.id, b.memName, b.memAvatar, 
+if(isset($_GET["search"]) && ($_GET["search"]!="")){
+    
+    $searchText = '%'.trim($_GET["search"]).'%';
+    $searchHref = "&search=".$searchText."";
+    
+    // 有搜尋關鍵字時的sql語句
+    $sql = "SELECT b.id, b.memName, b.memAvatar, 
                 m.commentNo, m.comment, m.commentTime 
         FROM message AS m
         LEFT JOIN member AS b
-        ON (m.memberId = b.id)";
+        ON (m.memberId = b.id)
+        WHERE m.comment LIKE ?
+        ORDER BY m.commentTime DESC";
+    
+    $stmt = $dbLink->prepare($sql);
+    $stmt->bind_param("s", $searchText);
+    $stmt->execute();
 
-if(isset($_GET["search"])){
-    $searchText = trim($_GET["search"]);
-    $searchHref = "&search=".$searchText."";
-    $sql = $sql . "WHERE m.comment LIKE '%".$searchText."%'";
+    $result = $stmt->get_result();
+    $totalRow = $result->num_rows;   //總筆數
+    
+    // 有搜尋關鍵字時的sql limit語句
+    $sqlLimit = "SELECT b.id, b.memName, b.memAvatar, 
+                m.commentNo, m.comment, m.commentTime 
+        FROM message AS m
+        LEFT JOIN member AS b
+        ON (m.memberId = b.id)
+        WHERE m.comment LIKE ?
+        ORDER BY m.commentTime DESC
+        LIMIT ?,?";
+    $stmt = $dbLink->prepare($sqlLimit);
+    $stmt->bind_param("sii", $searchText, $startRow,$pageRow);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
 }else{
     $searchText = "";
     $searchHref = "";
+    // 無搜尋關鍵字時的sql語句
+    $sql = "SELECT b.id, b.memName, b.memAvatar, 
+                m.commentNo, m.comment, m.commentTime 
+        FROM message AS m
+        LEFT JOIN member AS b
+        ON (m.memberId = b.id)
+        ORDER BY m.commentTime DESC";
+
+    $stmt = $dbLink->prepare($sql);
+    $stmt->execute();
+    
+    $result = $stmt->get_result();
+    $totalRow = $result->num_rows;   //總筆數
+    $totalPage = ceil($totalRow/$pageRow);  //總頁數
+
+    // 無搜尋關鍵字時的sql limit語句
+    $sql = "SELECT b.id, b.memName, b.memAvatar, 
+    m.commentNo, m.comment, m.commentTime 
+    FROM message AS m
+    LEFT JOIN member AS b
+    ON (m.memberId = b.id)
+    ORDER BY m.commentTime DESC
+    LIMIT ?,?";
+
+    $stmt = $dbLink->prepare($sql);
+    $stmt->bind_param("ii", $startRow,$pageRow);
+    $stmt->execute();
+    $result = $stmt->get_result();
 }
-
-$sql = $sql . "ORDER BY m.commentTime DESC";
-
-$sqlLimit = $sql . " LIMIT " . $startRow . "," . $pageRow;
-$allResult = $dbLink->query($sql);
-$result = $dbLink->query($sqlLimit);
-
-$totalRow = $allResult->num_rows;   //總筆數
-$totalPage = ceil($totalRow/$pageRow);  //總頁數
 ?>
 
 <!DOCTYPE html>
@@ -49,43 +93,44 @@ $totalPage = ceil($totalRow/$pageRow);  //總頁數
     
         <form action="message.php" method="get">
             <div class="searchArea">
-                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput" autocomplete="off" value=<?php echo $searchText?>>
+                搜尋留言 <input type="text" name="search" class="searchInput" id="searchInput" autocomplete="off" value=<?php echo isset($_GET["search"])?trim($_GET["search"]):'' ?> >
                 <button type="submit" class="btn btnPrimary" onSubmit="searchComment()">搜尋</button>
             </div>
         </form>
 
         <div id="containerArea">
         <?php
-        if( $totalRow == 0){
+        if( isset($totalRow) && $totalRow == 0){
             echo "<script type='text/javascript'>alert('Oops! 沒有任何查詢結果');</script>";
+        }else{
+            while($rowResult = $result->fetch_assoc()){
+                echo ' <div class="container">
+                            <div class="contentArea" id="contentArea'.$rowResult["commentNo"].'">
+                                <div class="avatar">
+                                    <img src="./assets/img/member/'. $rowResult["memAvatar"] .'" alt="avatar">
+                                </div>
+                                <div class="memContent">
+                                    <div class="memberName">'.$rowResult["memName"].'</div>
+                                    <div class="commentTime">'.$rowResult["commentTime"].'</div>
+                                </div>
+                                <div class="msgContent showContent" id="msgContent'.$rowResult["commentNo"].'">
+                                    '.nl2br($rowResult["comment"]).'
+                                </div>
+                            </div>
+                            <div class="actionArea">
+                                <div class="edit">
+                                    <a href="update.php?page='.$pageNumber.'&commentNo='.$rowResult["commentNo"].''.$searchHref.'" class="btn btnSecondary">編輯</a>
+                                </div>
+                                <div class="delete">
+                                    <a href="javascript:void(0)" onClick="dropData('.$rowResult["commentNo"].')" class="btn btnWarning">刪除</a>
+                                </div>
+                                <input type="hidden" name="commentNo'.$rowResult["commentNo"].'"  value="'.$rowResult["commentNo"] . '" class="hiddenInput">
+                                <input type="hidden" name="memId'.$rowResult["commentNo"].'" value="'.$rowResult["id"] . '">                    
+                            </div>
+                        </div>';
+            }
         }
 
-        while($rowResult = $result->fetch_assoc()){
-            echo ' <div class="container">
-                        <div class="contentArea" id="contentArea'.$rowResult["commentNo"].'">
-                            <div class="avatar">
-                                <img src="./assets/img/member/'. $rowResult["memAvatar"] .'" alt="avatar">
-                            </div>
-                            <div class="memContent">
-                                <div class="memberName">'.$rowResult["memName"].'</div>
-                                <div class="commentTime">'.$rowResult["commentTime"].'</div>
-                            </div>
-                            <div class="msgContent showContent" id="msgContent'.$rowResult["commentNo"].'">
-                                '.nl2br($rowResult["comment"]).'
-                            </div>
-                        </div>
-                        <div class="actionArea">
-                            <div class="edit">
-                                <a href="update.php?page='.$pageNumber.'&commentNo='.$rowResult["commentNo"].''.$searchHref.'" class="btn btnSecondary">編輯</a>
-                            </div>
-                            <div class="delete">
-                                <a href="javascript:void(0)" onClick="dropData('.$rowResult["commentNo"].')" class="btn btnWarning">刪除</a>
-                            </div>
-                            <input type="hidden" name="commentNo'.$rowResult["commentNo"].'"  value="'.$rowResult["commentNo"] . '" class="hiddenInput">
-                            <input type="hidden" name="memId'.$rowResult["commentNo"].'" value="'.$rowResult["id"] . '">                    
-                        </div>
-                    </div>';
-        }
         ?>
             <div class="paginationBlock">
             <ul class="pagination" id="pagination">

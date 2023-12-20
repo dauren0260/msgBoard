@@ -37,7 +37,7 @@ $stmt->fetch();
         <form action="updateDB.php" method="post" class="update">
             <div class="msgContainer">
                 <div class="avatar commentAvatar">
-                    <img src="./assets/img/member/<?php echo $avatar ?>" alt="avatar" />';
+                    <img src="./assets/img/member/<?php echo $avatar ?>" alt="avatar" />
                     <div class="username"><?php echo $name; ?></div>
                 </div>
                 <textarea name="content" id="content" cols="80" rows="15"><?php echo $comment; ?></textarea>
