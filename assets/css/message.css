@@ -98,6 +98,7 @@ pre{
 
 .msgContainer .avatar{
     width: 80px;
+    text-align: center;
 }
 
 .msgContainer button{
@@ -235,14 +236,6 @@ pre{
 }
 
 @media screen and (max-width: 768px){
-
-    .logo img{
-        width: 150px;
-    }
-
-    .logo .infoArea{
-        position: unset;
-    }
 
     .textArea{
         width: 350px;

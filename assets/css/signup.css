@@ -10,20 +10,15 @@ tbody td{
     position: relative;
 }
 
-.isValid, .unValid{
+.isValid{
     display: none;
     position: absolute;
-    right: 10px;
+    right: -20px;
     top: 7px;
-}
-.isValid{
     color: #6DB9EF;
 }
-.unValid{
-    color: red;
-}
-.isValid.show,
-.unValid.show{
+
+.isValid.show{
     display: inline-block;
 }
 

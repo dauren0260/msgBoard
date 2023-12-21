@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/d36fc6fed2.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js" integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./src/email-genie.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/index.css" type="text/css">
@@ -14,25 +15,20 @@
 </head>
 
 <body>
-    <form action="registerMember.php" method="post" class="signup">
+    <form action="api/registerMember.php" method="post" class="signup">
         <div class="title">會員註冊</div>
         <table>
             <tbody>
                 <tr>
                     <td class="accountTd">
                         <label>
-                            帳號：<input type="text" name="account" required id="accountInput" minlength="4" autocomplete="off">
+                            帳號：<input type="email" name="email" required id="accountInput" class="email" autocomplete="off">
                         </label>
                         <i class="fa-solid fa-check isValid" id="checkIcon"></i>
                     </td>
                     <td>
                         <label>
                             密碼：<input type="password" name="password" required minlength="4" autocomplete="off">
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            Email：<input type="email" name="email" required>
                         </label>
                     </td>
                     <td>
@@ -48,9 +44,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="index.php">
-                            <button type="button" value="login" class="btn btnSecondary">返回登入</button>
-                        </a>
+                        <a href="index.php" class="btn btnSecondary">返回登入</a>
                     </td>
                 </tr>
             </tfoot>
@@ -58,20 +52,29 @@
     </form>
 
     <script type="text/javascript">
+        let checkIcon = document.getElementById("checkIcon")
+        let emailReg = /^\w{3,}(\.\w+)*@[A-z0-9]+(\.[A-z]{2,5}){1,2}$/;
+        var field = new EmailGenie('.email',
+        {
+            domains: ['gmail.com', 'outlook.com', 'hotmail.com', 'msn.com', 'live.com', 'yahoo.com', 'me.com', 'icloud.com'],
+            overrideDomains: true,
+            insert: 'beforebegin'
+        });
+
         accountInput.addEventListener("change",checkInput,false);
         accountInput.addEventListener("input",checkInputIcon,false);
         signupBtn.addEventListener("submit",checkForm,false);
-        let checkIcon = document.getElementById("checkIcon")
 
         function checkInput(){
             if((accountInput.value == '') || (accountInput.value == ' ')){
-
+                
                 checkIcon.className = "fa-solid fa-check isValid"
-                alert(`${accountInput.previousSibling.nodeValue.slice(0,-1)}不可為空`);
+                alert(`${accountInput.previousSibling.previousSibling.nodeValue.slice(0,-1)}不可為空`);
 
-            }else if(accountInput.name == "account" && accountInput.value.length >= 4){
+            }else if(emailReg.test(accountInput.value)){
+                
                 // 發送請求確認帳號沒有重複
-                axios.get(`checkAccount.php?name=${accountInput.value}`)
+                axios.get(`api/checkAccount.php?name=${accountInput.value}`)
                 .then( res => {
                     if(res.data>0){
                         alert("此帳號已被使用");
@@ -80,9 +83,11 @@
                         checkIcon.classList.add('show')
                     }
                 })
-            }else if(accountInput.name == "account" && accountInput.value.length < 4){
-                alert("帳號不可低於四位英數字")
-                checkIcon.classList.toggle('show')
+            }else if(emailReg.test(accountInput.value) == false){
+                alert("帳號格式錯誤")
+                accountInput.value = ''
+                checkInputIcon()
+                this.focus()
             }
         }
 
@@ -96,8 +101,6 @@
         }
 
         function checkInputIcon(){
-            // if((this.value == '') || (this.value == ' ')){
-            // }
             checkIcon.className = "fa-solid fa-check isValid"
         }
 

@@ -1,6 +1,6 @@
 <?php
-require_once("connectDB.php");
-require_once("memberInfo.php");
+require_once("api/connectDB.php");
+require_once("api/memberInfo.php");
 
 $pageRow = 3;  //每頁顯示3筆
 $pageNumber = 1;  //當前頁數
@@ -198,7 +198,7 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
             </div>
         </div>
 
-    <form action="insert.php" method="post" class="insert">
+    <form action="api/insert.php" method="post" class="insert">
         <div class="msgContainer">
             <div class="avatar commentAvatar">
                 <img src="./assets/img/member/memDefault.png" alt="avatar">
@@ -216,14 +216,15 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
             let hiddenInput = parent.querySelector(".hiddenInput").value;
 
             if(confirm("確認刪除留言?")){
-                window.location =  `deleteData.php?commentNo=${params}`;
+                var data = new FormData();
+                data.append('commentNo', hiddenInput);
+                axios.post('api/deleteData.php', data)
+                .then( (response) => {
+                    window.location.reload()
+                })
             }else{
                 e.preventDefault();
             }
-        }
-        logOutBtn.addEventListener("click",logOut,false)
-        function logOut(){
-            axios('logOut.php').then(()=> window.location="index.php")
         }
 
         var allDelBtn = document.querySelectorAll(".delBtn");

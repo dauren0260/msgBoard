@@ -1,6 +1,10 @@
+.memberCenter .avatar{
+    text-align: center;
+}
+
 .memberCenter .avatar img{
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
 }
 
 .memberCenter .container{
@@ -10,4 +14,17 @@
 
 .memberCenter .container div{
     margin: 20px 0 ;
+}
+.showChangePsw.hide{
+    display: none;
+}
+.changePsw{
+    padding: 20px 0;
+}
+
+.changePsw.hide{
+    display: none;
+}
+.changePsw input{
+    margin: 10px 0;
 }

@@ -1,6 +1,6 @@
 <?php
-require_once("connectDB.php");
-require_once("memberInfo.php");
+require_once("api/connectDB.php");
+require_once("api/memberInfo.php");
 
 if(isset($_GET["page"])){
     $pageNumber = $_GET["page"];
@@ -26,6 +26,7 @@ $stmt->fetch();
 
 if($memberId != $id){
     header("Location: message.php");
+    exit;
 }
 
 ?>
@@ -36,11 +37,11 @@ if($memberId != $id){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/index.css" type="text/css">
     <link rel="stylesheet" href="./assets/css/message.css" type="text/css">
-    <title>Document</title>
+    <title>編輯留言</title>
 </head>
 <body>
         <div class="title">留言版 - 編輯留言</div>    
-        <form action="updateDB.php" method="post" class="update">
+        <form action="api/updateDB.php" method="post" class="update">
             <div class="msgContainer">
                 <div class="avatar commentAvatar">
                     <img src="./assets/img/member/<?php echo $avatar ?>" alt="avatar" />

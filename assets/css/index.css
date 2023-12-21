@@ -90,3 +90,14 @@ tfoot tr{
     color: #fff;
 }
 
+@media screen and (max-width: 768px){
+
+    .logo img{
+        width: 150px;
+    }
+
+    .logo .infoArea{
+        position: unset;
+    }
+
+}
