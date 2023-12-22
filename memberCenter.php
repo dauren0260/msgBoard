@@ -18,7 +18,9 @@ require_once("api/memberInfo.php");
         require_once("header.php");
     ?>
     <div class="container">
-        <div class="avatar"><img src="./assets/img/member/<?php echo $memAvatar?>" alt="avatar"></div>
+        <div class="avatar">
+            <img src="./assets/img/member/<?php echo $memAvatar?>" alt="avatar">
+        </div>
         <div>姓名：<?php echo $memName?></div>
         <div>信箱：<?php echo $memEmail?></div>
         <button class="btn btnSecondary showChangePsw" id="showChangePsw">更改密碼</button>
@@ -31,20 +33,25 @@ require_once("api/memberInfo.php");
     </div>
 
     <script>
+
         showChangePsw.addEventListener("click",function(){
-            this.classList.toggle("hide")
-            changeArea.classList.toggle("hide")
+            this.classList.toggle("hide");
+            changeArea.classList.toggle("hide");
+            oldPsw.value = '';
+            newPsw.value = '';
         },false)
+
         cancelBtn.addEventListener("click",function(){
-            changeArea.classList.toggle("hide")
-            showChangePsw.classList.toggle("hide")
+            changeArea.classList.toggle("hide");
+            showChangePsw.classList.toggle("hide");
         },false)
 
 
         sendBtn.addEventListener("click",function(){
-
-            if(oldPsw.value == newPsw.value){
-                alert("密碼不可與上次相同!")
+            if(oldPsw.value.length < 4 || newPsw.value.length < 4){
+                alert("密碼最小長度需四位數");
+            }else if(oldPsw.value == newPsw.value){
+                alert("密碼不可與上次相同!");
                 oldPsw.value = '';
                 newPsw.value = '';
                 oldPsw.focus();
@@ -56,12 +63,15 @@ require_once("api/memberInfo.php");
                 axios.post('api/changePassword.php', data)
                 .then( (response) => {
                     console.log(response)
-                    if(!response.error){
-                        alert("修改密碼成功!")
-                        changeArea.classList.toggle("hide")
-                        showChangePsw.classList.toggle("hide")
+                    if(!response.data.error){
+                        alert("修改密碼成功!");
+                        changeArea.classList.toggle("hide");
+                        showChangePsw.classList.toggle("hide");
                     }else{
                         alert("修改密碼失敗!")
+                        oldPsw.value = '';
+                        newPsw.value = '';
+                        oldPsw.focus();
                     }
                 })
             }

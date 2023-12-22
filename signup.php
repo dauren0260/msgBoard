@@ -74,7 +74,7 @@
             }else if(emailReg.test(accountInput.value)){
                 
                 // 發送請求確認帳號沒有重複
-                axios.get(`api/checkAccount.php?name=${accountInput.value}`)
+                axios.get(`api/checkAccount.php?email=${accountInput.value}`)
                 .then( res => {
                     if(res.data>0){
                         alert("此帳號已被使用");

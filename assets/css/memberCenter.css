@@ -2,6 +2,13 @@
     text-align: center;
 }
 
+.memberCenter .avatar .btnPrimary{
+    padding: 5px;
+    font-size: 12px;
+    position: relative;
+    left: 90px;
+}
+
 .memberCenter .avatar img{
     width: 150px;
     height: 150px;

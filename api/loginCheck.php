@@ -1,7 +1,7 @@
 <?php
 require_once("connectDB.php");
 session_start();
-$email = strtolower($_POST["email"]);
+$email = $_POST["email"];
 $postPassword = $_POST["password"];
 
 $sql = "SELECT id, memEmail, memPassword
@@ -22,7 +22,6 @@ if($stmt->execute()){
 
         header("Location: ../message.php");
         exit;
-        // echo "<script type='text/javascript'>window.location = 'message.php'</script>";
     } else {
         echo "<script type='text/javascript'>alert('帳號或密碼錯誤'); window.location = '../index.php'</script>";
     }

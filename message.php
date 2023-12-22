@@ -46,7 +46,6 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
     $stmt->bind_param("sii", $searchText, $startRow,$pageRow);
     $stmt->execute();
     $result = $stmt->get_result();
-    // print_r($result);
 }else{
     $searchText = "";
     $searchHref = "";
@@ -214,22 +213,36 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
         function dropData(e) {
             let parent = this.parentNode.parentNode;
             let hiddenInput = parent.querySelector(".hiddenInput").value;
+            let content = parent.parentNode.querySelector(".showContent").innerText;
+            console.log(content)
 
             if(confirm("確認刪除留言?")){
-                var data = new FormData();
-                data.append('commentNo', hiddenInput);
-                axios.post('api/deleteData.php', data)
-                .then( (response) => {
-                    window.location.reload()
-                })
+                var sendData = new FormData();
+                sendData.append('commentNo', hiddenInput);
+                sendData.append('content', content);
+
+                axios.post('api/deleteData.php', sendData)
+                .then( (res) => {
+                    let data = res.data
+
+                    if(data.error){
+                        alert(data.errorMsg);
+                    }else{
+                        alert("刪除成功");
+                        window.location.reload();
+                    }
+                }).catch(err=>console.log(err))
             }else{
                 e.preventDefault();
             }
         }
 
-        var allDelBtn = document.querySelectorAll(".delBtn");
-        for (let i = 0; i < allDelBtn.length; i++) {
-            allDelBtn[i].addEventListener("click",dropData,false)
+        window.onload = function(){
+            var allDelBtn = document.querySelectorAll(".delBtn");
+            for (let i = 0; i < allDelBtn.length; i++) {
+                allDelBtn[i].addEventListener("click",dropData,false)
+                console.log("綁定 alldelbtn")
+            }
         }
     </script>
 </body>

@@ -16,7 +16,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td>信箱：<input type="email" name="email" required autocomplete="off"  class="email"></td>
+                    <td>信箱：<input type="email" name="email" required autocomplete="off"  class="email" placeholder="請輸入email"></td>
                     <td>密碼：<input type="password" name="password" required autocomplete="off"></td>
                 </tr>
             </tbody>

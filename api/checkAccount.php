@@ -4,11 +4,12 @@ require_once("connectDB.php");
 $email = strtolower($_GET["email"]);
 $sql = "SELECT memEmail 
         FROM member 
-        WHERE memEmail = '".$email."'";
+        WHERE memEmail = ?";
 
-$stmt = $dbLink->query($sql);
-$result_num = $stmt->num_rows;
-echo json_encode($result_num);
-
-
+$stmt = $dbLink->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$resultNumber = $result->num_rows; 
+echo json_encode($resultNumber);
 ?>

@@ -25,8 +25,7 @@ $stmt->bind_result($commentNo, $comment, $time, $memberId, $name, $avatar);
 $stmt->fetch();
 
 if($memberId != $id){
-    header("Location: message.php");
-    exit;
+    echo "<script type='text/javascript'>alert('僅能修改自己的留言!'); window.location = 'message.php'</script>";
 }
 
 ?>
