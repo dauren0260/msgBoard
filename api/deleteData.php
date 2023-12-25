@@ -2,6 +2,7 @@
 require_once("connectDB.php");
 require_once("memberInfo.php");
 
+$resArray = array();
 if($_SERVER["REQUEST_METHOD"]=="POST" && !empty($_POST)){
 
         $sqlSelect = "SELECT commentNo, comment
@@ -32,5 +33,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && !empty($_POST)){
         echo json_encode($resArray);
 }
 
-header("Location: ../message.php");
+if($_SERVER["REQUEST_METHOD"]=="GET"){
+        header("Location: ../message.php");
+}
 ?>

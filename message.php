@@ -223,9 +223,12 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
 
                 axios.post('api/deleteData.php', sendData)
                 .then( (res) => {
+                    console.log(res)
+                    console.log(typeof res.data);
+                    
                     let data = res.data
 
-                    if(data.error){
+                    if(data.error==true){
                         alert(data.errorMsg);
                     }else{
                         alert("刪除成功");
@@ -241,7 +244,6 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
             var allDelBtn = document.querySelectorAll(".delBtn");
             for (let i = 0; i < allDelBtn.length; i++) {
                 allDelBtn[i].addEventListener("click",dropData,false)
-                console.log("綁定 alldelbtn")
             }
         }
     </script>

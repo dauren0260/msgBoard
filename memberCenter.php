@@ -25,8 +25,8 @@ require_once("api/memberInfo.php");
         <div>信箱：<?php echo $memEmail?></div>
         <button class="btn btnSecondary showChangePsw" id="showChangePsw">更改密碼</button>
         <div class="changePsw hide" id="changeArea">
-            請輸入舊密碼：<input type="password" name="oldPsw" id="oldPsw" required minlength="4" autocomplete="off"><br/>
-            請輸入新密碼：<input type="password" name="newPsw" id="newPsw" required minlength="4" autocomplete="off">
+            請輸入舊密碼：<input type="password" name="oldPsw" id="oldPsw" required minlength="8" autocomplete="off"><br/>
+            請輸入新密碼：<input type="password" name="newPsw" id="newPsw" required minlength="8" autocomplete="off">
             <button class="btn btnPrimary" id="sendBtn">送出</button>
             <button class="btn btnSecondary" id="cancelBtn">取消</button>
         </div>
@@ -48,8 +48,15 @@ require_once("api/memberInfo.php");
 
 
         sendBtn.addEventListener("click",function(){
-            if(oldPsw.value.length < 4 || newPsw.value.length < 4){
-                alert("密碼最小長度需四位數");
+            // 密碼8碼，且有英數字
+            let strReg =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/; //
+            let val = newPsw.value;
+
+            if(!strReg.test(val)){
+                alert("密碼長度至少8碼，一個大寫字母，與其他英數字");
+                newPsw.value = '';
+                newPsw.focus();
+
             }else if(oldPsw.value == newPsw.value){
                 alert("密碼不可與上次相同!");
                 oldPsw.value = '';

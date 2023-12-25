@@ -22,13 +22,13 @@
                 <tr>
                     <td class="accountTd">
                         <label>
-                            帳號：<input type="email" name="email" required id="accountInput" class="email" autocomplete="off">
+                            帳號：<input type="email" name="email" required id="accountInput" class="email" autocomplete="off" placeholder="請輸入email">
                         </label>
                         <i class="fa-solid fa-check isValid" id="checkIcon"></i>
                     </td>
                     <td>
                         <label>
-                            密碼：<input type="password" name="password" required minlength="4" autocomplete="off">
+                            密碼：<input type="password" name="password" required minlength="8" id="password" autocomplete="off">
                         </label>
                     </td>
                     <td>
@@ -92,8 +92,16 @@
         }
 
         function checkForm(){
-           if(checkIcon.classList.contains('show')){
-                return true
+            if(checkIcon.classList.contains('show')){
+                // 密碼8碼，且有英數字
+                let strReg =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/; //
+                let val = password.value;
+                if(!strReg.test(val)){
+                    alert("密碼長度至少8碼，一個大寫字母，與其他英數字")
+                    return false;
+                }else{
+                    return true;
+                }
             }else{
                 alert("請檢查帳號可否使用!")
                 return false
