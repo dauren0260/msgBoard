@@ -22,7 +22,7 @@
                 <tr>
                     <td class="accountTd">
                         <label>
-                            帳號：<input type="email" name="email" required id="accountInput" class="email" autocomplete="off">
+                            帳號：<input type="email" name="email" required id="accountInput" class="email" autocomplete="off" placeholder="請輸入email">
                         </label>
                         <i class="fa-solid fa-check isValid" id="checkIcon"></i>
                     </td>

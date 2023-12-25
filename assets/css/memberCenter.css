@@ -44,3 +44,19 @@
 .hide{
     display: none;
 }
+
+[for="fileTag"] {
+    padding: 6px 10px;
+    background-color: #6DB9EF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#fileTag {
+    display: none;
+}
+
+.uploadArea{
+    text-align: center;
+}
