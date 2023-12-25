@@ -56,9 +56,8 @@ require_once("api/memberInfo.php");
 
         axios.post('api/updateAvatar.php', sendData)
         .then( (res) => {
-            console.log(res)
             removeHandler();
-            // window.location.reload();
+            window.location.reload();
         })
 
     },false)
