@@ -2,7 +2,8 @@
     text-align: center;
 }
 
-.memberCenter .avatar .btnPrimary{
+.memberCenter .uploadArea .btnPrimary,
+.memberCenter .uploadArea .btnWarning{
     padding: 5px;
     font-size: 12px;
     position: relative;
@@ -12,6 +13,10 @@
 .memberCenter .avatar img{
     width: 150px;
     height: 150px;
+}
+
+.memberCenter .uploadArea img{
+    width: 150px;
 }
 
 .memberCenter .container{
@@ -34,4 +39,24 @@
 }
 .changePsw input{
     margin: 10px 0;
+}
+
+.hide{
+    display: none;
+}
+
+[for="fileTag"] {
+    padding: 6px 10px;
+    background-color: #6DB9EF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#fileTag {
+    display: none;
+}
+
+.uploadArea{
+    text-align: center;
 }

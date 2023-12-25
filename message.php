@@ -200,7 +200,7 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
     <form action="api/insert.php" method="post" class="insert">
         <div class="msgContainer">
             <div class="avatar commentAvatar">
-                <img src="./assets/img/member/memDefault.png" alt="avatar">
+                <img src="./assets/img/member/<?php echo $memAvatar?>" alt="avatar">
                 <div class="username"><?php echo $memName?></div>
             </div>
             <div class="textArea">
