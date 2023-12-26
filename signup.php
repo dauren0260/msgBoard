@@ -30,6 +30,7 @@
                         <label>
                             密碼：<input type="password" name="password" required minlength="8" id="password" autocomplete="off">
                         </label>
+                        <i class="fa-regular fa-eye" id="eyeIcon"></i>
                     </td>
                     <td>
                         <label>
@@ -52,8 +53,11 @@
     </form>
 
     <script type="text/javascript">
-        let checkIcon = document.getElementById("checkIcon")
+        let checkIcon = document.getElementById("checkIcon");
+        // Email正則
         let emailReg = /^\w{3,}(\.\w+)*@[A-z0-9]+(\.[A-z]{2,5}){1,2}$/;
+
+        //自動填入Email
         var field = new EmailGenie('.email',
         {
             domains: ['gmail.com', 'outlook.com', 'hotmail.com', 'msn.com', 'live.com', 'yahoo.com', 'me.com', 'icloud.com'],
@@ -62,13 +66,11 @@
         });
 
         accountInput.addEventListener("change",checkInput,false);
-        accountInput.addEventListener("input",checkInputIcon,false);
-        signupBtn.addEventListener("submit",checkForm,false);
-
         function checkInput(){
+            // 要用trim()
             if((accountInput.value == '') || (accountInput.value == ' ')){
                 
-                checkIcon.className = "fa-solid fa-check isValid"
+                checkIcon.className = "fa-solid fa-check isValid";
                 alert(`${accountInput.previousSibling.previousSibling.nodeValue.slice(0,-1)}不可為空`);
 
             }else if(emailReg.test(accountInput.value)){
@@ -80,37 +82,50 @@
                         alert("此帳號已被使用");
                         accountInput.value = '';
                     }else{
-                        checkIcon.classList.add('show')
+                        checkIcon.classList.add('show');
                     }
                 })
             }else if(emailReg.test(accountInput.value) == false){
-                alert("帳號格式錯誤")
-                accountInput.value = ''
-                checkInputIcon()
-                this.focus()
+                alert("帳號格式錯誤");
+                accountInput.value = '';
+                checkInputIcon();
+                this.focus();
             }
         }
 
+        signupBtn.addEventListener("submit",checkForm,false);
         function checkForm(){
-            if(checkIcon.classList.contains('show')){
+            if(checkIcon.classList.contains('show')){  //帳號有無重複寫在後端驗證
                 // 密碼8碼，且有英數字
-                let strReg =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/; //
+                let strReg =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/; 
                 let val = password.value;
                 if(!strReg.test(val)){
-                    alert("密碼長度至少8碼，一個大寫字母，與其他英數字")
+                    alert("密碼長度至少8碼，包含一個大寫字母，與其他英數字")
                     return false;
                 }else{
                     return true;
                 }
             }else{
-                alert("請檢查帳號可否使用!")
-                return false
+                alert("請檢查帳號可否使用!");
+                return false;
             }
         }
-
+        // 修改input的值時也要清除show樣式名
+        accountInput.addEventListener("input",checkInputIcon,false);
         function checkInputIcon(){
-            checkIcon.className = "fa-solid fa-check isValid"
+            checkIcon.className = "fa-solid fa-check isValid";
         }
+
+        eyeIcon.addEventListener("click",function(){
+            if(password.type == "password"){
+                password.type = "text";
+            }else{
+                password.type = "password";
+            }
+            this.classList.toggle("fa-eye");
+            this.classList.toggle("fa-eye-slash");
+
+        },false);
 
 
     </script>

@@ -10,13 +10,13 @@ if(isset($_GET["search"])){
 }else{
     $searchText = "";
 }
-
+// join
 $sql = "SELECT  m.commentNo, m.comment, m.commentTime, 
                 b.id, b.memName, b.memAvatar 
         FROM message AS m
         LEFT JOIN member AS b
         ON (m.memberId = b.id)
-        WHERE m.commentNo = ?";
+        WHERE m.commentNo = ? ";
 
 $stmt = $dbLink->prepare($sql);
 $stmt->bind_param("i", $_GET["commentNo"]);
@@ -47,6 +47,7 @@ if($memberId != $id){
                     <div class="username"><?php echo $name; ?></div>
                 </div>
                 <textarea name="content" id="content" cols="80" rows="15"><?php echo $comment; ?></textarea>
+                <!-- 修改編號 -->
                 <input type="hidden" name="commentNo"  value="<?php echo $commentNo; ?>">
                 <input type="hidden" name="page"  value="<?php echo $_GET["page"]; ?>">
             </div>

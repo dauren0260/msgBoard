@@ -16,6 +16,7 @@ switch ($_FILES["avatarImg"]["error"]) {
             mkdir($dir);
         }
 
+        // 兩個人上傳同個檔名的圖片，會覆蓋掉
         $from = $_FILES["avatarImg"]["tmp_name"];
         $avatarImg = $_FILES["avatarImg"]["name"];
         $to = "{$dir}/{$avatarImg}";
@@ -33,10 +34,6 @@ switch ($_FILES["avatarImg"]["error"]) {
         $msg["uploadStatus"] = "上傳的檔案過大，不得超過". ini_get("upload_max_filesize") . "<br/>";
         echo json_encode($msg);
         break;
-    // case UPLOAD_ERR_FROM_SIZE:
-    //     $msg["uploadStatus"] = "上傳的檔案過大，不得超過". $_POST["MAX_FILE_SIZE"] . "<br/>";
-    //     echo json_encode($msg);
-    //     break;
     case UPLOAD_ERR_PARTIAL:
         $msg["uploadStatus"] = "上傳檔案不完整";
         echo json_encode($msg);

@@ -12,6 +12,7 @@ $stmt = $dbLink->prepare($sql);
 $stmt->bind_param("s", $email);
 
 if($stmt->execute()){
+    // $id、$memEmail 沒有用到
     $stmt->bind_result($id ,$memEmail, $hashPassword);
     $stmt->fetch();
 

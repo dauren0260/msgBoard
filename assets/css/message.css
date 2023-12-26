@@ -236,9 +236,14 @@ pre{
 }
 
 @media screen and (max-width: 768px){
+    .msgContainer .avatar{
+        text-align: justify;
+    }
+
 
     .textArea{
         width: 350px;
+        margin-top: 10px;
     }
     
     .msgContainer textarea {

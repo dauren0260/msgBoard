@@ -11,7 +11,7 @@ echo    "<div class='logo'>
             
 
 echo    "<script>
-            logOutBtn.addEventListener('click',logOut,false)
+            logOutBtn.addEventListener('click',logOut,false);
             function logOut(){
                 axios('api/logOut.php').then(()=> window.location='index.php')
             }

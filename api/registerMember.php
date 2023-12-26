@@ -7,6 +7,7 @@ $filterEmail = filter_var($email,FILTER_SANITIZE_EMAIL);
 if (filter_var($filterEmail,FILTER_VALIDATE_EMAIL)){
     $email = filter_var($filterEmail,FILTER_VALIDATE_EMAIL);
 } else {
+    // 調整
     $email = false;
 }
 

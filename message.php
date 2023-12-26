@@ -2,7 +2,7 @@
 require_once("api/connectDB.php");
 require_once("api/memberInfo.php");
 
-$pageRow = 5;  //每頁顯示3筆
+$pageRow = 5;  //每頁顯示5筆
 $pageNumber = 1;  //當前頁數
 
 if(isset($_GET["page"])){
@@ -214,7 +214,6 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
             let parent = this.parentNode.parentNode;
             let hiddenInput = parent.querySelector(".hiddenInput").value;
             let content = parent.parentNode.querySelector(".showContent").innerText;
-            console.log(content)
 
             if(confirm("確認刪除留言?")){
                 var sendData = new FormData();
@@ -223,14 +222,14 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
 
                 axios.post('api/deleteData.php', sendData)
                 .then( (res) => {
-                    let data = res.data
+                    let data = res.data;
                     if(data.error==true){
                         alert(data.errorMsg);
                     }else{
                         alert("刪除成功");
                         window.location.reload();
                     }
-                }).catch(err=>console.log(err))
+                }).catch(err=>console.log(err);)
             }else{
                 e.preventDefault();
             }
@@ -239,7 +238,7 @@ if(isset($_GET["search"]) && ($_GET["search"]!="")){
         window.onload = function(){
             var allDelBtn = document.querySelectorAll(".delBtn");
             for (let i = 0; i < allDelBtn.length; i++) {
-                allDelBtn[i].addEventListener("click",dropData,false)
+                allDelBtn[i].addEventListener("click",dropData,false);
             }
         }
     </script>

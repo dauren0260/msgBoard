@@ -4,9 +4,6 @@
 
 tbody td{
     text-align: right;
-}
-
-.accountTd{
     position: relative;
 }
 
@@ -28,4 +25,12 @@ tbody td{
     padding: 3px 6px;
     right: -50px;
     font-size: x-small;
+}
+
+.fa-eye, .fa-eye-slash{
+    position: absolute;
+    top: 8px;
+    right: 7px;
+    color: #6DB9EF;
+    cursor: pointer;
 }

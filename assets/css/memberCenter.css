@@ -6,8 +6,6 @@
 .memberCenter .uploadArea .btnWarning{
     padding: 5px;
     font-size: 12px;
-    position: relative;
-    left: 90px;
 }
 
 .memberCenter .avatar img{
@@ -17,21 +15,34 @@
 
 .memberCenter .uploadArea img{
     width: 150px;
+    display: block;
 }
 
 .memberCenter .container{
-    width: 200px;
-    margin: 0 auto;
+    /* width: 200px;
+    margin: 0 auto; */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .memberCenter .container div{
-    margin: 20px 0 ;
+    margin: 20px;
 }
+
+.showChangePsw{
+    margin-left: 20px;
+}
+
 .showChangePsw.hide{
     display: none;
 }
 .changePsw{
     padding: 20px 0;
+}
+
+[type="password"],[type="text"]{
+    display: block;
 }
 
 .changePsw.hide{
@@ -40,9 +51,15 @@
 .changePsw input{
     margin: 10px 0;
 }
-
+.memberCenter .changePsw div{
+    margin: 0;
+}
 .hide{
     display: none;
+}
+
+.fileInputArea span{
+    font-size: 12px;
 }
 
 [for="fileTag"] {
@@ -51,6 +68,7 @@
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    display: block;
 }
 
 #fileTag {
@@ -59,4 +77,22 @@
 
 .uploadArea{
     text-align: center;
+    border: 1px dotted;
+    padding: 20px;
+}
+
+.memberCenter .fa-regular{
+    position: relative;
+    left: 85%;
+    top: -29px;
+    color: #6DB9EF;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px){
+    .memberCenter .container{
+        flex-direction: column;
+        align-items: center;
+    }
+
 }

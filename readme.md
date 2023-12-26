@@ -1,0 +1,13 @@
+# 12/26 code review
+-[x] 0. Javascript語句都加上分號 
+-[] 1. `memberCenter.php` 引入`memberInfo.php`，會員無登入，使用相對路徑，結果跳回去的頁面每個檔案不同
+-[] 2. `message.php` 優化sql語句
+-[] 3. `signup.php` 判斷部分要用`trim()`  `if((accountInput.value == '') || (accountInput.value == ' ')`
+-[] 4. `update.php`  sql語句無須Join也不影響後續使用
+-[] 5. `update.php` 不該搜尋別人的留言
+-[] 6. `update.php`   line50 壞人修改此處的hidden input，會成功跳轉，無阻擋
+-[] 7. `deleteData.php`  無須撈內容去比對，反正都是自己的留言
+-[] 8. `loginCheck.php`   $id ,$memEmail 沒有用到就不要用
+-[] 9. `memberInfo.php`  $id變數名稱很危險
+-[] 10.  `registerMember.php`  `$email = false` ，思考此處如何調整? 原是字符串，在這又變boolean
+-[] 11.  `updateAvatar.php`  上傳圖檔，若兩人上傳同個檔名的圖片，會後者覆蓋前者

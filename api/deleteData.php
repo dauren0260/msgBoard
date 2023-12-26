@@ -5,6 +5,7 @@ require_once("memberInfo.php");
 $resArray = array();
 if($_SERVER["REQUEST_METHOD"]=="POST" && !empty($_POST)){
 
+        
         $sqlSelect = "SELECT commentNo, comment
                         FROM message
                         WHERE commentNo = ?";

@@ -41,7 +41,7 @@
         });
 
         window.onload = function(){
-            document.querySelector(".email").focus()
+            document.querySelector(".email").focus();
         }
     </script>
 </body>
